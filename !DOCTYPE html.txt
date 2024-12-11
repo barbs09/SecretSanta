@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecretSanta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sanahotels.com%2Fpt%2Fpromocoes-ofertas%2Fnatal%2F&psig=AOvVaw3f06-YZgRqrFyX2v9GDOGV&ust=1734006003733000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOiu3fLZn4oDFQAAAAAdAAAAABAE'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            color: #333;
+        }
+        header {
+            background-color: #ff0000;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+        }
+        main {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            max-width: 800px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        select, input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #ff0000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #cc0000;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+    </style>
+    <script>
+        const gifts = {
+            interesses: {
+                tecnologia: ["Fones de ouvido Bluetooth", "Gadget multifuncional", "Smartwatch", "Teclado mecânico"],
+                livros: ["Romance bestseller", "Livro técnico", "História em quadrinhos", "Biografia inspiradora"],
+                esportes: ["Camisa do time favorito", "Garrafa térmica esportiva", "Bolsa de academia", "Acessórios para ciclismo"],
+                cozinha: ["Conjunto de facas", "Aparelho de fondue", "Livro de receitas", "Kit de especiarias"],
+                arte: ["Kit de pintura", "Escultura decorativa", "Quadro moderno", "Livros sobre arte"],
+                musica: ["Fones de ouvido de alta qualidade", "Instrumento musical", "Assinatura de streaming", "Álbum de vinil"],
+                viagens: ["Organizador de bagagem", "Guia de viagem", "Câmera portátil", "Adaptador universal"]
+            }
+        };
+
+        function gerarPresentes() {
+            const genero = document.querySelector('input[name="genero"]:checked')?.value;
+            const contexto = document.getElementById("contexto").value;
+            const interessesSelecionados = Array.from(document.querySelectorAll('input[name="interesse"]:checked')).map(el => el.value);
+
+            const presentes = [];
+
+            interessesSelecionados.forEach(interesse => {
+                if (gifts.interesses[interesse]) {
+                    presentes.push(...gifts.interesses[interesse]);
+                }
+            });
+
+            const resultadosDiv = document.getElementById("resultados");
+            resultadosDiv.innerHTML = "";
+
+            if (presentes.length > 0) {
+                resultadosDiv.innerHTML = `<h3>Opções de presente para o contexto ${contexto}</h3>`;
+                presentes.forEach(presente => {
+                    const item = document.createElement("p");
+                    item.textContent = presente;
+                    resultadosDiv.appendChild(item);
+                });
+            } else {
+                resultadosDiv.innerHTML = `<p>Por favor, selecione ao menos um interesse para gerar sugestões de presentes.</p>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>SecretSanta</h1>
+        <p>Onde a diversão do Amigo Secreto ganha vida com presentes incríveis!</p>
+    </header>
+    <main>
+        <div class="form-group">
+            <label>Gênero</label>
+            <input type="radio" name="genero" value="masculino"> Masculino
+            <input type="radio" name="genero" value="feminino"> Feminino
+            <input type="radio" name="genero" value="nao-binario"> Não-binário
+        </div>
+        <div class="form-group">
+            <label>Interesses</label>
+            <input type="checkbox" name="interesse" value="tecnologia"> Tecnologia
+            <input type="checkbox" name="interesse" value="livros"> Livros
+            <input type="checkbox" name="interesse" value="esportes"> Esportes
+            <input type="checkbox" name="interesse" value="cozinha"> Cozinha
+            <input type="checkbox" name="interesse" value="arte"> Arte
+            <input type="checkbox" name="interesse" value="musica"> Música
+            <input type="checkbox" name="interesse" value="viagens"> Viagens
+        </div>
+        <div class="form-group">
+            <label>Contexto do Amigo Secreto</label>
+            <select id="contexto">
+                <option value="trabalho">Trabalho</option>
+                <option value="familia">Família</option>
+                <option value="amigos">Amigos</option>
+            </select>
+        </div>
+        <button onclick="gerarPresentes()">Gerar Presentes</button>
+        <div id="resultados" class="results"></div>
+    </main>
+</body>
+</html>
